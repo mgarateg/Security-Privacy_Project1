@@ -8,7 +8,7 @@ s.connect((host, port))
 s.send("Hello server!")
 
 with open('received_file', 'wb') as f:
-    print 'file opened'
+    print ('file opened')
     while True:
         print('receiving data...')
         data = s.recv(1024)

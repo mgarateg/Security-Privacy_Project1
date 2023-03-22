@@ -1,16 +1,24 @@
 import socket
+sock = socket.socket()
+print ("Socket created successfully.")
 
-HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
-PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
+port = 8800
+host = ''
+sock.bind((host, port))
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print(f"Connected by {addr}")
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
+sock.listen(10)
+print('Socket is listening...')
+while True:
+    con, addr = sock.accept()
+    print('Connected with ', addr)
+
+    data = con.recv(1024)
+    print(data.decode())
+    file = open('server-file.txt', 'rb')
+    line = file.read(1024)
+    while(line):
+        con.send(line)
+        line = file.read(1024)
+    file.close()
+    print('File has been transferred successfully.')
+    con.close()

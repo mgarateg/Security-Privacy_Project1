@@ -1,1 +1,1 @@
-Hi! I am from the server, but I belong to the client.
+Hi! This is a message John, Raj, and Martina are sending from the server to the client.

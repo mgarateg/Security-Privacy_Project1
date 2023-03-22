@@ -1,11 +1,23 @@
 import socket
+sock = socket.socket()
+print ("Socket created successfully.")
 
-HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 65432  # The port used by the server
+port = 8800
+host = 'localhost'
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b"Hello, world")
-    data = s.recv(1024)
+sock.connect((host, port))
+print('Connection Established.')
+sock.send('A message from the client'.encode())
+file = open('client-file.txt', 'wb')
 
-print(f"Received {data!r}")
+line = sock.recv(1024)
+
+while(line):
+    file.write(line)
+    line = sock.recv(1024)
+
+print('File has been received successfully.')
+
+file.close()
+sock.close()
+print('Connection Closed.')
